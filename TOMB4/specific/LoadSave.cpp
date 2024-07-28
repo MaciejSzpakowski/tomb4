@@ -33,9 +33,11 @@ long MusicVolume = 40;
 long SFXVolume = 80;
 long ControlMethod;
 char MonoScreenOn;
+const int PAGE_SIZE = 10;
+const int PAGE_COUNT = 10;
 
 static MONOSCREEN_STRUCT MonoScreen;
-static SAVEFILE_INFO SaveGames[15];
+static SAVEFILE_INFO SaveGames[PAGE_SIZE * PAGE_COUNT];
 
 void DoOptions()
 {
@@ -549,7 +551,7 @@ long S_DisplayPauseMenu(long reset)
 }
 
 long DoLoadSave(long LoadSave)
-{
+{	
 	SAVEFILE_INFO* pSave;
 	static long selection;
 	long txt, l;
@@ -563,8 +565,10 @@ long DoLoadSave(long LoadSave)
 		txt = TXT_Load_Game;
 
 	PrintString(phd_centerx, font_height, 6, SCRIPT_TEXT(txt), FF_CENTER);
+	wsprintf(string, "Page %d", selection/ PAGE_SIZE + 1);
+	PrintString(phd_centerx, font_height * 2, 6, string, FF_CENTER);
 
-	for (int i = 0; i < 15; i++)
+	for (int i = selection / PAGE_SIZE * PAGE_SIZE; i < selection / PAGE_SIZE * PAGE_SIZE + PAGE_SIZE; i++)
 	{
 		pSave = &SaveGames[i];
 		color = 2;
@@ -585,15 +589,15 @@ long DoLoadSave(long LoadSave)
 		if (pSave->valid)
 		{
 			wsprintf(string, "%03d", pSave->num);
-			PrintString(phd_centerx - long((float)phd_winwidth / 640.0F * 310.0), font_height + font_height * (i + 2), color, string, 0);
-			PrintString(phd_centerx - long((float)phd_winwidth / 640.0F * 270.0), font_height + font_height * (i + 2), color, name, 0);
-			wsprintf(string, "%d %s %02d:%02d:%02d", pSave->days, SCRIPT_TEXT(TXT_days), pSave->hours, pSave->minutes, pSave->seconds);
-			PrintString(phd_centerx - long((float)phd_winwidth / 640.0F * -135.0), font_height + font_height * (i + 2), color, string, 0);
+			PrintString(phd_centerx - long((float)phd_winwidth / 640.0F * 310.0), font_height * 3 + font_height *(i + 2 - selection / PAGE_SIZE * PAGE_SIZE), color, string, 0);
+			PrintString(phd_centerx - long((float)phd_winwidth / 640.0F * 270.0), font_height * 3 + font_height * (i + 2 - selection / PAGE_SIZE * PAGE_SIZE), color, name, 0);
+			wsprintf(string, "%d.%02d:%02d:%02d", pSave->days, pSave->hours, pSave->minutes, pSave->seconds);
+			PrintString(phd_centerx - long((float)phd_winwidth / 640.0F * -135.0), font_height * 3 + font_height * (i + 2 - selection / PAGE_SIZE * PAGE_SIZE), color, string, 0);
 		}
 		else
 		{
-			wsprintf(string, "%s", pSave->name);
-			PrintString(phd_centerx, font_height + font_height * (i + 2), color, string, FF_CENTER);
+			wsprintf(string, "Empty slot");
+			PrintString(phd_centerx, font_height * 3 + font_height * (i + 2 - selection / PAGE_SIZE * PAGE_SIZE), color, string, FF_CENTER);
 		}
 
 		small_font = 0;
@@ -604,17 +608,30 @@ long DoLoadSave(long LoadSave)
 		selection--;
 		SoundEffect(SFX_MENU_CHOOSE, 0, SFX_ALWAYS);
 	}
-
-	if (dbinput & IN_BACK)
+	else if (dbinput & IN_BACK)
 	{
 		selection++;
 		SoundEffect(SFX_MENU_CHOOSE, 0, SFX_ALWAYS);
 	}
+	else if (dbinput & IN_LEFT)
+	{
+		selection -= PAGE_SIZE;
+		SoundEffect(SFX_MENU_CHOOSE, 0, SFX_ALWAYS);
+	}
+	else if (dbinput & IN_RIGHT)
+	{
+		selection += PAGE_SIZE;
+		SoundEffect(SFX_MENU_CHOOSE, 0, SFX_ALWAYS);
+	}
 
 	if (selection < 0)
-		selection = 0;
-	else if (selection > 14)
-		selection = 14;
+	{
+		selection = PAGE_SIZE * PAGE_COUNT + selection;
+	}
+	else if (selection > PAGE_SIZE * PAGE_COUNT - 1)
+	{
+		selection = selection - PAGE_SIZE * PAGE_COUNT;
+	}
 
 	if (dbinput & IN_SELECT)
 	{
@@ -1039,7 +1056,7 @@ long GetSaveLoadFiles()
 
 	SaveCounter = 0;
 
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < PAGE_SIZE * PAGE_COUNT; i++)
 	{
 		pSave = &SaveGames[i];
 		wsprintf(name, "savegame.%d", i);
