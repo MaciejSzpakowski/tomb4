@@ -53,8 +53,7 @@ void DrawGameInfo(long timed)
 	short ammo;
 	char buf[80];
 
-	// SZPAK
-	/*fps += 1;
+	fps += 1;
 	int cur = time(0);
 	if (cur != fpslast)
 	{
@@ -64,7 +63,7 @@ void DrawGameInfo(long timed)
 	}
 
 	wsprintf(buf, "%d", fpsPrint);
-	PrintString(20, 60, 0, buf, 0);*/
+	PrintString(20, 60, 0, buf, 0);
 
 	if (!GLOBAL_playing_cutseq && !bDisableLaraControl && gfGameMode != 1)
 	{
