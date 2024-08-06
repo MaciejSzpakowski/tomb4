@@ -7,6 +7,7 @@
 TEXTURE* Textures;
 long nTextures;
 
+
 LPDIRECTDRAWSURFACEX CreateTexturePage(long w, long h, long MipMapCount, long* pSrc, rgbfunc RGBM, long format)
 {
 	DXTEXTUREINFO* tex;

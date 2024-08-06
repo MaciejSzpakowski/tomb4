@@ -468,6 +468,10 @@ bool WinCreateWindow()
 		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 		bg, 0, App.hInstance, 0);
 
+	App.hWnd2 = CreateWindowEx(0, "MainGameWindow", "D3D11", WS_POPUP,
+		2000, 0, 1280, 960,
+		App.hWnd, 0, App.hInstance, 0);
+
 	if (!App.hWnd)
 		return 0;
 
@@ -492,6 +496,8 @@ void WinSetStyle(bool fullscreen, ulong& set)
 	if (set)
 		set = style;
 }
+
+int d3d11(HWND hwnd, UINT w, UINT h);
 
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nShowCmd)
 {
@@ -526,7 +532,12 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	}
 
 	ShowWindow(App.hWnd, SW_HIDE);
+	ShowWindow(App.hWnd2, SW_SHOW);
+	UpdateWindow(App.hWnd2);
 	UpdateWindow(App.hWnd);
+
+	d3d11(App.hWnd2, 1280, 960);
+
 	DXGetInfo(&App.DXInfo, App.hWnd);
 
 	if (start_setup || !LoadSettings())

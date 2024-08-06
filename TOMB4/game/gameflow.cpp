@@ -29,6 +29,9 @@
 #include "lara.h"
 #include "../tomb4/tomb4.h"
 
+void renderStart();
+void renderEnd();
+
 short CreditGroups[18] =
 {
 	0,
@@ -533,7 +536,9 @@ void DoLevel(uchar Name, uchar Audio)
 			gfLegendTime--;
 		}
 
+		renderStart();
 		nFrames = DrawPhaseGame();
+		renderEnd();
 		handle_cutseq_triggering(Name);
 
 		if (DEL_playingamefmv)
@@ -849,6 +854,8 @@ long TitleOptions()
 	return ret;
 }
 
+
+
 void DoTitle(uchar Name, uchar Audio)
 {
 	SetFade(255, 0);
@@ -923,7 +930,10 @@ void DoTitle(uchar Name, uchar Audio)
 			break;
 
 		handle_cutseq_triggering(Name);
+		renderStart();
 		nFrames = DrawPhaseGame();
+
+		renderEnd();
 		gfStatus = ControlPhase(nFrames, 0);
 	}
 
