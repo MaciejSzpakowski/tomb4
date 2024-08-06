@@ -698,6 +698,9 @@
     <ClCompile Include="TOMB4\specific\drawbars.cpp">
       <Filter>TOMB4</Filter>
     </ClCompile>
+    <ClCompile Include="TOMB4\specific\d3d11.cpp">
+      <Filter>TOMB4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="tomb4.rc" />

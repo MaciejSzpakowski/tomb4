@@ -1322,6 +1322,7 @@ struct WINAPP
 {
 	HINSTANCE hInstance;
 	HWND hWnd;
+	HWND hWnd2;
 	WNDCLASS WindowClass;
 	DXINFO DXInfo;
 	DXPTR dx;

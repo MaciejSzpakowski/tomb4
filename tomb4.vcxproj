@@ -361,6 +361,7 @@
     <ClCompile Include="TOMB4\specific\audio.cpp" />
     <ClCompile Include="TOMB4\specific\clipping.cpp" />
     <ClCompile Include="TOMB4\specific\cmdline.cpp" />
+    <ClCompile Include="TOMB4\specific\d3d11.cpp" />
     <ClCompile Include="TOMB4\specific\d3dmatrix.cpp" />
     <ClCompile Include="TOMB4\specific\drawbars.cpp" />
     <ClCompile Include="TOMB4\specific\drawroom.cpp" />
