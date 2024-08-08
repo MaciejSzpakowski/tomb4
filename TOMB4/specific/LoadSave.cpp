@@ -444,6 +444,7 @@ void DisplayStatsUCunt()
 	PrintString(phd_centerx >> 2, y + 5 * font_height, 2, SCRIPT_TEXT(TXT_Ammo_Used), 0);
 	PrintString(phd_centerx >> 2, y + 6 * font_height, 2, SCRIPT_TEXT(TXT_Health_Packs_Used), 0);
 	PrintString(phd_centerx >> 2, y + 7 * font_height, 2, SCRIPT_TEXT(TXT_Secrets_Found), 0);
+	PrintString(phd_centerx >> 2, y + 8 * font_height, 2, "Level Secrets", 0);
 
 	sec = GameTimer / 30;
 	days = sec / 86400;
@@ -469,6 +470,8 @@ void DisplayStatsUCunt()
 	sprintf(buf, "%d / 70", savegame.Game.Secrets);
 #endif
 	PrintString(phd_centerx + (phd_centerx >> 2), y + 7 * font_height, 6, buf, 0);
+	sprintf(buf, "%d / ?", savegame.Level.Secrets);
+	PrintString(phd_centerx + (phd_centerx >> 2), y + 8 * font_height, 6, buf, 0);
 }
 
 long S_DisplayPauseMenu(long reset)
