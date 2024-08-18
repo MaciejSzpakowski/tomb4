@@ -1,8 +1,6 @@
 #include "../tomb4/pch.h"
 #include "function_stubs.h"
 
-FILE* logF = 0;
-
 PHD_VECTOR CamPos;
 PHD_VECTOR CamRot;
 
@@ -58,6 +56,7 @@ void* game_malloc(long size)
 	if (size > malloc_free)
 	{
 		Log(0, "OUT OF MEMORY");
+		exit(1);
 		return 0;
 	}
 	else
@@ -73,17 +72,11 @@ void* game_malloc(long size)
 
 void Log(ulong type, const char* s, ...)
 {
-#ifdef DO_LOG
 	va_list list;
 	char buf[4096];
-
-	if (!logF)
-		logF = fopen("log.txt", "w+");
-
 	va_start(list, s);
 	vsprintf(buf, s, list);
 	strcat(buf, "\n");
 	va_end(list);
-	fwrite(buf, strlen(buf), 1, logF);
-#endif
+	printf(buf);
 }

@@ -9,7 +9,6 @@ void init_game_malloc();
 void* game_malloc(long size);
 void Log(ulong type, const char* s, ...);
 
-extern FILE* logF;
 extern PHD_VECTOR CamPos;
 extern PHD_VECTOR CamRot;
 extern long nPolyType;

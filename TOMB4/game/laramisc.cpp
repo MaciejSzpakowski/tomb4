@@ -23,9 +23,9 @@
 #include "../tomb4/tomb4.h"
 #include "../specific/dxsound.h"
 
-COLL_INFO mycoll;
+COLL_INFO collision;
 
-static COLL_INFO* lara_coll = &mycoll;
+//static COLL_INFO* lara_coll = &mycoll;
 
 void LaraCheatyBits()
 {
@@ -598,7 +598,7 @@ void LaraControl(short item_number)
 		if (lara.vehicle == NO_ITEM)
 			lara.air = 1800;
 
-		LaraAboveWater(l, lara_coll);
+		LaraAboveWater(l, &collision);
 		break;
 
 	case LW_UNDERWATER:
@@ -614,7 +614,7 @@ void LaraControl(short item_number)
 			}
 		}
 
-		LaraUnderWater(l, lara_coll);
+		LaraUnderWater(l, &collision);
 		break;
 
 	case LW_SURFACE:
@@ -627,11 +627,11 @@ void LaraControl(short item_number)
 				lara.air = 1800;
 		}
 
-		LaraSurface(l, lara_coll);
+		LaraSurface(l, &collision);
 		break;
 
 	case LW_FLYCHEAT:
-		LaraCheat(l, lara_coll);
+		LaraCheat(l, &collision);
 		break;
 	}
 

@@ -320,12 +320,12 @@ void FlameTorchControl(short item_number)
 
 	if (GetCollidedObjects(item, 0, 1, itemlist, meshlist, 0))
 	{
-		mycoll.enable_baddie_push = 1;
+		collision.enable_baddie_push = 1;
 
 		if (itemlist[0])
 		{
 			if (!objects[itemlist[0]->object_number].intelligent)
-				ObjectCollision(itemlist[0] - items, item, &mycoll);
+				ObjectCollision(itemlist[0] - items, item, &collision);
 		}
 		else
 		{
@@ -334,7 +334,7 @@ void FlameTorchControl(short item_number)
 			pos.y_pos = meshlist[0]->y;
 			pos.z_pos = meshlist[0]->z;
 			pos.y_rot = meshlist[0]->y_rot;
-			ItemPushLaraStatic(item, (short*)&sinfo->x_minc, &pos, &mycoll);
+			ItemPushLaraStatic(item, (short*)&sinfo->x_minc, &pos, &collision);
 		}
 
 		item->speed >>= 1;

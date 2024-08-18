@@ -1099,11 +1099,11 @@ void JeepBaddieCollision(ITEM_INFO* item)
 			{
 				if (collided->object_number == ENEMY_JEEP)
 				{
-					mycoll.coll_type = 0;
-					mycoll.radius = 400;
-					mycoll.enable_baddie_push = 1;
-					mycoll.enable_spaz = 0;
-					ObjectCollision(item_number, item, &mycoll);
+					collision.coll_type = 0;
+					collision.radius = 400;
+					collision.enable_baddie_push = 1;
+					collision.enable_spaz = 0;
+					ObjectCollision(item_number, item, &collision);
 				}
 				else if (obj->collision && obj->intelligent || collided->object_number == ROLLINGBALL || collided->object_number == TEETH_SPIKES)
 				{

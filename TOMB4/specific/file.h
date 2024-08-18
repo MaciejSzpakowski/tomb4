@@ -4,7 +4,6 @@
 unsigned int __stdcall LoadLevel(void* name);
 long S_LoadLevelFile(long num);
 void FreeLevel();
-bool FindCDDrive();
 FILE* FileOpen(const char* name);
 void FileClose(FILE* file);
 long FileSize(FILE* file);
@@ -24,7 +23,7 @@ bool LoadAIInfo();
 bool LoadSamples();
 void S_GetUVRotateTextures();
 void AdjustUV(long num);
-bool Decompress(char* pDest, char* pCompressed, long compressedSize, long size);
+bool Decompress(void* pDest, void* pCompressed, unsigned int compressedSize, unsigned int size);
 
 extern TEXTURESTRUCT* textinfo;
 extern SPRITESTRUCT* spriteinfo;

@@ -232,59 +232,16 @@ void FreeLevel()
 	malloc_free = malloc_size;
 }
 
-bool FindCDDrive()
-{
-	HANDLE file;
-	ulong drives, type;
-	char path[14];
-	char root[5];
-	static char cd_drive;
-
-	strcpy(path, "c:\\script.dat");
-	drives = GetLogicalDrives();
-	cd_drive = 'A';
-	lstrcpy(root, "A:\\");
-
-	while (drives)
-	{
-		if (drives & 1)
-		{
-			root[0] = cd_drive;
-			type = GetDriveType(root);
-
-			if (type == DRIVE_CDROM)
-			{
-				path[0] = cd_drive;
-				file = CreateFile(path, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
-				if (file != INVALID_HANDLE_VALUE)
-				{
-					CloseHandle(file);
-					return 1;
-				}
-			}
-		}
-
-		cd_drive++;
-		drives >>= 1;
-	}
-
-	return 0;
-}
-
 FILE* FileOpen(const char* name)
 {
 	FILE* file;
-	char path_name[80];
-
-	memset(path_name, 0, 80);
-	strcat(path_name, name);
-	Log(5, "FileOpen - %s", path_name);
-	file = fopen(path_name, "rb");
-
+	Log(5, "FileOpen - %s", name);
+	file = fopen(name, "rb");
 	if (!file)
-		Log(1, "Unable To Open %s", path_name);
-
+	{
+		Log(1, "Unable To Open %s", name);
+		exit(1);
+	}
 	return file;
 }
 
@@ -611,6 +568,7 @@ bool LoadRooms()
 	if (number_rooms < 0 || number_rooms > 1024)
 	{
 		Log(1, "Incorrect Number Of Rooms");
+		exit(1);
 		return 0;
 	}
 
@@ -1410,7 +1368,7 @@ void AdjustUV(long num)
 	}
 }
 
-bool Decompress(char* pDest, char* pCompressed, long compressedSize, long size)
+bool Decompress(void* pDest, void* pCompressed, unsigned int compressedSize, unsigned int size)
 {
 	z_stream stream;
 
