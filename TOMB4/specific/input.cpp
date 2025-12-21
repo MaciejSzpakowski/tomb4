@@ -562,6 +562,19 @@ long S_UpdateInput()
 			linput ^= IN_BACK;
 	}
 
+	// binoculars hotkey
+	if (keymap[DIK_Q])
+	{
+		if ((lara_item->current_anim_state == AS_STOP && lara_item->anim_number == ANIM_BREATH || lara.IsDucked && !(input & IN_DUCK)))
+		{
+			//oldLaraBusy = 1;
+			BinocularRange = 128;
+
+			if (lara.gun_status != LG_NO_ARMS)
+				lara.gun_status = LG_UNDRAW_GUNS;
+		}
+	}
+
 	if (debounce)
 		dbinput = inputBusy & (dbinput ^ inputBusy);
 

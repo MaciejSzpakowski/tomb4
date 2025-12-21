@@ -72,8 +72,9 @@ void DrawGameInfo(long timed)
 		DrawAirBar(flash_state);
 		DrawPickups();
 
-		if (DashTimer < 120)
-			S_DrawDashBar(100 * DashTimer / 120);
+		// infinite dash
+		//if (DashTimer < 120)
+		//	S_DrawDashBar(100 * DashTimer / 120);
 
 		if (lara.target)
 		{

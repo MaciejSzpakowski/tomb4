@@ -25,8 +25,6 @@
 
 COLL_INFO collision;
 
-//static COLL_INFO* lara_coll = &mycoll;
-
 void LaraCheatyBits()
 {
 	if (!tomb4.cheats)

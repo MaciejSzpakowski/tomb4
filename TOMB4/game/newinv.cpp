@@ -2506,6 +2506,7 @@ void draw_current_object_list(long ringnum)
 	long n, maxobj, xoff, shade, minobj, objmeup, nummeup, activenum;
 	short ymeup, yrot;
 	char textbufme[128];
+	long slideSpeed = 8192 * 2;
 
 	if (rings[ringnum]->numobjectsinlist <= 0)
 		return;
@@ -2818,17 +2819,17 @@ void draw_current_object_list(long ringnum)
 			}
 
 			if (rings[ringnum]->objlistmovement > 0)
-				rings[ringnum]->objlistmovement += 8192;
+				rings[ringnum]->objlistmovement += slideSpeed;
 
 			if (rings[ringnum]->objlistmovement < 0)
-				rings[ringnum]->objlistmovement -= 8192;
+				rings[ringnum]->objlistmovement -= slideSpeed;
 
 			if (go_left)
 			{
 				if (!rings[ringnum]->objlistmovement)
 				{
 					SoundEffect(SFX_MENU_ROTATE, 0, SFX_ALWAYS);
-					rings[ringnum]->objlistmovement += 8192;
+					rings[ringnum]->objlistmovement += slideSpeed;
 
 					if (ammo_selector_flag)
 						ammo_selector_fade_dir = 2;
@@ -2840,7 +2841,7 @@ void draw_current_object_list(long ringnum)
 				if (!rings[ringnum]->objlistmovement)
 				{
 					SoundEffect(SFX_MENU_ROTATE, 0, SFX_ALWAYS);
-					rings[ringnum]->objlistmovement -= 8192;
+					rings[ringnum]->objlistmovement -= slideSpeed;
 
 					if (ammo_selector_flag)
 						ammo_selector_fade_dir = 2;
