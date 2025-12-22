@@ -129,7 +129,7 @@ void SkeletonControl(short item_number)
 	ROOM_INFO* r;
 	MESH_INFO* mesh;
 	AI_INFO info;
-	AI_INFO larainfo;
+	AI_INFO larainfo = {};
 	PHD_VECTOR pos;
 	long x, y, z, Xoffset, Zoffset, nearheight, midheight, farheight, jump_ahead, long_jump_ahead;
 	long dx, dz, jump_left, jump_right, h1, h2, h;
