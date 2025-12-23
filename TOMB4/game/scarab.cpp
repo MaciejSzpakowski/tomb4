@@ -315,7 +315,7 @@ void UpdateScarabs()
 			floor = GetFloor(fx->pos.x_pos, fx->pos.y_pos, fx->pos.z_pos, &fx->room_number);
 			h = GetHeight(floor, fx->pos.x_pos, fx->pos.y_pos, fx->pos.z_pos);
 
-			if (h < fx->pos.y_pos - 1280 || h == NO_HEIGHT)
+			if (h < fx->pos.y_pos - 640 || h == NO_HEIGHT)
 			{
 				fx->pos.y_rot += angle > 0 ? 0x4000 : -0x4000;
 				fx->pos.x_pos = oldx;
