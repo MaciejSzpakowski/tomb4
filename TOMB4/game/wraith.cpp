@@ -345,6 +345,7 @@ void WraithControl(short item_number)
 		{
 			item->ai_bits++;
 
+			// i think this is wraith death counter, more than 25 and it explodes
 			if (item->ai_bits > 25)
 			{
 				item->pos.x_pos = target->pos.x_pos;
