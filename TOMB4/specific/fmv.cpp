@@ -117,7 +117,8 @@ long PlayFmvNow(long num)
 	dm = App.DXInfo.nDisplayMode;
 	current = &modes[dm];
 
-	if (current->bpp != 32 || current->w != 640 || current->h != 480)
+	// dont force 640x480
+	/*if (current->bpp != 32 || current->w != 640 || current->h != 480)
 	{
 		ndms = G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].nDisplayModes;
 
@@ -134,7 +135,7 @@ long PlayFmvNow(long num)
 		HWInitialise();
 		ClearSurfaces();
 		rm = 1;
-	}
+	}*/
 	
 	Bink = 0;
 	BinkSetSoundSystem(BinkOpenDirectSound, App.dx.lpDS);
