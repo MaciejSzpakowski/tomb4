@@ -2753,8 +2753,19 @@ void draw_current_object_list(long ringnum)
 				else
 					sprintf(textbufme, "%d x %s", nummeup, SCRIPT_TEXT(objme->objname));
 			}
+			// mechanical scarab
+			else if (objme->objname == 98)
+			{
+				const char* formatStrings[] = { "%s %d uses", "%s %d use","%s broken" };
+				const char* formatString = formatStrings[0];
+				if (lara.beetle_uses == 1)  formatString = formatStrings[1];
+				else if(lara.beetle_uses == 0)  formatString = formatStrings[2];
+				sprintf(textbufme, formatString, SCRIPT_TEXT(objme->objname), lara.beetle_uses);
+			}
 			else
+			{
 				sprintf(textbufme, SCRIPT_TEXT(objme->objname));
+			}
 
 			if (ringnum == RING_INVENTORY)
 				objmeup = long(phd_centery - float(phd_winymax + 1) / 16.0F * 3.0F);
