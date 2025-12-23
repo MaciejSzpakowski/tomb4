@@ -725,6 +725,9 @@ long DXCreate(long w, long h, long bpp, long Flags, DXPTR* dxptr, HWND hWnd, lon
 	RECT r;
 	long flag, CoopLevel;
 
+	int desktopx = GetSystemMetrics(SM_CXSCREEN);
+	int desktopy = GetSystemMetrics(SM_CYSCREEN);
+
 	flag = 0;
 	Log(2, "DXCreate");
 	G_dxptr = dxptr;
@@ -828,7 +831,7 @@ long DXCreate(long w, long h, long bpp, long Flags, DXPTR* dxptr, HWND hWnd, lon
 		r.right = dm->w;
 		r.bottom = dm->h;
 		AdjustWindowRect(&r, WindowStyle, 0);
-		SetWindowPos(hWnd, 0, 0, 0, r.right - r.left, r.bottom - r.top, SWP_NOMOVE | SWP_NOZORDER);
+		SetWindowPos(hWnd, 0, desktopx/2 - dm->w/2, desktopy/2-dm->h/2, dm->w, dm->h, SWP_NOZORDER);
 		GetClientRect(hWnd, &G_dxptr->rViewport);
 		GetClientRect(hWnd, &G_dxptr->rScreen);
 		ClientToScreen(hWnd, (LPPOINT)&G_dxptr->rScreen);

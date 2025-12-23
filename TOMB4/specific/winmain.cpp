@@ -456,9 +456,17 @@ bool WinRegisterWindow(HINSTANCE hinstance)
 
 bool WinCreateWindow()
 {
-	App.hWnd = CreateWindowEx(WS_EX_APPWINDOW, "MainGameWindow", "Tomb Raider - The Last Revelation", WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+	int a = GetSystemMetrics(SM_CXSCREEN);
+	int b = GetSystemMetrics(SM_CYSCREEN);
+
+	HWND bg = CreateWindowEx(WS_EX_APPWINDOW, "MainGameWindow", "Tomb Raider - The Last Revelation", WS_POPUP,
+		0, 0, a, b,
 		0, 0, App.hInstance, 0);
+	ShowWindow(bg, SW_SHOW);
+
+	App.hWnd = CreateWindowEx(WS_EX_APPWINDOW, "MainGameWindow", "Tomb Raider - The Last Revelation", WS_POPUP,
+		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		bg, 0, App.hInstance, 0);
 
 	if (!App.hWnd)
 		return 0;
@@ -472,7 +480,8 @@ void WinSetStyle(bool fullscreen, ulong& set)
 
 	style = GetWindowLong(App.hWnd, GWL_STYLE);
 
-	if (fullscreen)
+	// alway popup
+	if (true)
 		style = (style & ~WS_OVERLAPPEDWINDOW) | WS_POPUP;
 	else
 		style = (style & ~WS_POPUP) | WS_OVERLAPPEDWINDOW;
