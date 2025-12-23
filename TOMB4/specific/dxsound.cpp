@@ -144,7 +144,7 @@ bool DXSetOutputFormat()
 
 	if (DXAttempt(App.dx.lpDS->CreateSoundBuffer(&desc, &DSPrimary, 0)) == DS_OK)
 	{
-		DXChangeOutputFormat(sfx_frequencies[SoundQuality], 0);
+		DXChangeOutputFormat(44100, 0);
 		DSPrimary->Play(0, 0, DSBPLAY_LOOPING);
 		return 1;
 	}

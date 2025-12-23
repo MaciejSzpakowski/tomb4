@@ -181,7 +181,7 @@ long PlayFmvNow(long num)
 		SetD3DViewMatrix();
 	}
 
-	DXChangeOutputFormat(sfx_frequencies[SoundQuality], 1);
+	DXChangeOutputFormat(44100, 1);
 	HWInitialise();
 	ClearSurfaces();
 	App.fmv = 0;

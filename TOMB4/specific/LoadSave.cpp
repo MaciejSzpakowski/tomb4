@@ -403,7 +403,7 @@ void DoOptions()
 			if (SoundQuality != sfx_quality_bak)
 			{
 				S_SoundStopAllSamples();
-				DXChangeOutputFormat(sfx_frequencies[SoundQuality], 0);
+				DXChangeOutputFormat(44100, 0);
 				sfx_quality_bak = SoundQuality;
 				SoundEffect(SFX_MENU_SELECT, 0, SFX_ALWAYS);
 			}
