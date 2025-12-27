@@ -616,8 +616,8 @@ void DemigodControl(short item_number)
 				TriggerHammerSmoke(pos.x, pos.y + 128, pos.z, 8);
 				camera.bounce = -128;
 
-				if ((lara_item->current_anim_state >= AS_CLIMBSTNC && lara_item->current_anim_state <= AS_CLIMBDOWN ||
-					lara_item->current_anim_state == AS_HANG) && !lara.location && lara_item->room_number > 114)
+				// commented out lara_item->current_anim_state == AS_HANG because otherwise it impossible to campus up on the side
+				if ((lara_item->current_anim_state >= AS_CLIMBSTNC && lara_item->current_anim_state <= AS_CLIMBDOWN /*|| lara_item->current_anim_state == AS_HANG*/) && !lara.location && lara_item->room_number > 114)
 				{
 					lara.torso_x_rot = 0;
 					lara.torso_y_rot = 0;
