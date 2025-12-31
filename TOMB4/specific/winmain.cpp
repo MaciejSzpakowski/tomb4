@@ -464,7 +464,7 @@ bool WinCreateWindow()
 		0, 0, App.hInstance, 0);
 	ShowWindow(bg, SW_SHOW);
 
-	App.hWnd = CreateWindowEx(WS_EX_APPWINDOW, "MainGameWindow", "Tomb Raider - The Last Revelation", WS_POPUP,
+	App.hWnd = CreateWindowEx(WS_EX_TOOLWINDOW, "MainGameWindow", "Tomb Raider - The Last Revelation", WS_POPUP| WS_CHILD,
 		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 		bg, 0, App.hInstance, 0);
 

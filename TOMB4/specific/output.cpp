@@ -722,7 +722,8 @@ void phd_PutPolygons(short* objptr, long clip)
 	}
 	else if (mesh->prelight)
 		InitItemDynamicLighting(current_item);
-	else
+	// for some reason, current_item is null in trenches when trying to shoot turret
+	else if(current_item)
 		InitObjectLighting(current_item);
 
 	clip_left = f_left;
