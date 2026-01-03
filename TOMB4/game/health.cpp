@@ -63,7 +63,7 @@ void DrawGameInfo(long timed)
 	}
 
 	wsprintf(buf, "%d", fpsPrint);
-	PrintString(20, 60, 0, buf, 0);
+	//PrintString(20, 60, 0, buf, 0);
 
 	if (!GLOBAL_playing_cutseq && !bDisableLaraControl && gfGameMode != 1)
 	{
