@@ -53,6 +53,8 @@ static char* FileData;
 static char* CompressedData;
 static long num_items;
 
+extern DXTEXTUREINFO mytx;
+
 unsigned int __stdcall LoadLevel(void* name)
 {
 	OBJECT_INFO* obj;
@@ -310,7 +312,8 @@ bool LoadTextures(long RTPages, long OTPages, long BTPages)
 	nTextures = 1;
 	format = 0;
 	skip = 4;
-	dxtex = &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].TextureInfos[G_dxinfo->nTexture];
+	//dxtex = &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].TextureInfos[G_dxinfo->nTexture];
+	dxtex = &mytx;
 
 	if (dxtex->rbpp == 8 && dxtex->gbpp == 8 && dxtex->bbpp == 8 && dxtex->abpp == 8)
 		format = 1;

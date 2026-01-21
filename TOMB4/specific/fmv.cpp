@@ -30,6 +30,8 @@ static BINK_STRUCT* Bink;
 static LPDIRECTDRAWSURFACEX BinkSurface;
 static long BinkSurfaceType;
 
+extern DXDISPLAYMODE mydm;
+
 #define GET_DLL_PROC(dll, proc, n) \
 { \
 	*(FARPROC *)&(proc) = GetProcAddress((dll), n); \
@@ -112,10 +114,11 @@ long PlayFmvNow(long num)
 	memset(path, 0, sizeof(path));
 	strcat(path, name);
 	App.fmv = 1;
-	modes = G_dxinfo->DDInfo[App.DXInfo.nDD].D3DDevices[App.DXInfo.nD3D].DisplayModes;
+	//modes = G_dxinfo->DDInfo[App.DXInfo.nDD].D3DDevices[App.DXInfo.nD3D].DisplayModes;
 	rm = 0;
 	dm = App.DXInfo.nDisplayMode;
-	current = &modes[dm];
+	//current = &modes[dm];
+	current = &mydm;
 
 	// dont force 640x480
 	/*if (current->bpp != 32 || current->w != 640 || current->h != 480)

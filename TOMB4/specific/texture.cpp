@@ -6,6 +6,7 @@
 
 TEXTURE* Textures;
 long nTextures;
+extern DXTEXTUREINFO mytx;
 
 LPDIRECTDRAWSURFACEX CreateTexturePage(long w, long h, long MipMapCount, long* pSrc, rgbfunc RGBM, long format)
 {
@@ -28,7 +29,7 @@ LPDIRECTDRAWSURFACEX CreateTexturePage(long w, long h, long MipMapCount, long* p
 	if (w < 32 || h < 32)
 		MipMapCount = 0;
 
-	desc.ddpfPixelFormat = G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].TextureInfos[G_dxinfo->nTexture].ddpf;
+	desc.ddpfPixelFormat = mytx.ddpf; // G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].TextureInfos[G_dxinfo->nTexture].ddpf;
 	desc.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;
 	desc.ddsCaps.dwCaps = DDSCAPS_TEXTURE;
 
@@ -65,7 +66,7 @@ LPDIRECTDRAWSURFACEX CreateTexturePage(long w, long h, long MipMapCount, long* p
 				if (RGBM)
 					RGBM(&r, &g, &b);
 
-				tex = &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].TextureInfos[G_dxinfo->nTexture];
+				tex = &mytx; // &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].TextureInfos[G_dxinfo->nTexture];
 				ro = r >> (8 - tex->rbpp) << (tex->rshift);
 				go = g >> (8 - tex->gbpp) << (tex->gshift);
 				bo = b >> (8 - tex->bbpp) << (tex->bshift);

@@ -493,8 +493,41 @@ void WinSetStyle(bool fullscreen, ulong& set)
 		set = style;
 }
 
+DXTEXTUREINFO mytx;
+	DXDISPLAYMODE mydm;
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nShowCmd)
 {
+	mydm = {};
+	mydm.w = 1600;
+	mydm.h = 1200;
+	mydm.bpp = 32;
+	mydm.ddsd.ddpfPixelFormat.dwSize = 32;
+
+	mydm.ddsd.ddpfPixelFormat.dwFlags = 64;
+	mydm.ddsd.ddpfPixelFormat.dwRGBBitCount = 32;
+	mydm.ddsd.ddpfPixelFormat.dwRBitMask = 16711680;
+	mydm.ddsd.ddpfPixelFormat.dwGBitMask = 65280;
+	mydm.ddsd.ddpfPixelFormat.dwBBitMask = 255;
+
+	mytx = {};
+	mytx.ddpf.dwSize = 32;
+	mytx.ddpf.dwFlags = 65;
+	mytx.ddpf.dwRGBBitCount = 32;
+	mytx.ddpf.dwRBitMask = 16711680;
+	mytx.ddpf.dwGBitMask = 65280;
+	mytx.ddpf.dwBBitMask = 255;
+	mytx.ddpf.dwRGBAlphaBitMask = 4278190080;
+	mytx.bpp = 32;
+	mytx.rbpp = 8;
+	mytx.gbpp = 8;
+	mytx.bbpp = 8;
+	mytx.abpp = 8;
+	mytx.rshift = 16;
+	mytx.gshift = 8;
+	mytx.bshift = 0;
+	mytx.ashift = 24;
+
+
 	DXDISPLAYMODE* dm;
 	HWND desktop;
 	HDC hdc;
@@ -527,10 +560,11 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 
 	ShowWindow(App.hWnd, SW_HIDE);
 	UpdateWindow(App.hWnd);
-	DXGetInfo(&App.DXInfo, App.hWnd);
+	//DXGetInfo(&App.DXInfo, App.hWnd);
 
 	if (start_setup || !LoadSettings())
 	{
+	DXGetInfo(&App.DXInfo, App.hWnd);
 		if (!DXSetupDialog())
 		{
 			free(gfScriptFile);
@@ -561,7 +595,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	App.dx.WaitAtBeginScene = 0;
 	App.dx.InScene = 0;
 	App.fmv = 0;
-	dm = &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].DisplayModes[G_dxinfo->nDisplayMode];
+	//dm = &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].DisplayModes[G_dxinfo->nDisplayMode];
+	dm = &mydm;
 
 	if (!DXCreate(dm->w, dm->h, dm->bpp, App.StartFlags, &App.dx, App.hWnd, WS_OVERLAPPEDWINDOW))
 	{

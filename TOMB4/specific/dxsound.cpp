@@ -166,7 +166,8 @@ bool DXDSCreate()
 	pcm_format.nSamplesPerSec = 22050;
 	pcm_format.nBlockAlign = 2;
 	pcm_format.wBitsPerSample = 16;
-	DXAttempt(DirectSoundCreate8(G_dxinfo->DSInfo[G_dxinfo->nDS].lpGuid, &App.dx.lpDS, 0));
+	GUID gzero = {};
+	DXAttempt(DirectSoundCreate8(&gzero, &App.dx.lpDS, 0));
 	DXAttempt(App.dx.lpDS->SetCooperativeLevel(App.hWnd, DSSCL_EXCLUSIVE));
 	DXSetOutputFormat();
 	DXAttempt(XAudio2Create(&App.dx.lpXA, 0, XAUDIO2_DEFAULT_PROCESSOR));

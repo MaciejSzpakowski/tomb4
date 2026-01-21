@@ -41,6 +41,7 @@ LPDIRECTDRAWX G_ddraw;
 LPDIRECT3DX G_d3d;
 HWND G_hwnd;
 char keymap[256];
+extern DXDISPLAYMODE mydm;
 
 static char keymap2[256];
 
@@ -742,7 +743,7 @@ long DXCreate(long w, long h, long bpp, long Flags, DXPTR* dxptr, HWND hWnd, lon
 
 	if (!flag)
 	{
-		if (!DXDDCreate(G_dxinfo->DDInfo[G_dxinfo->nDD].lpGuid, (void**)&G_dxptr->lpDD) || !DXD3DCreate(G_dxptr->lpDD, (void**)&G_dxptr->lpD3D))
+		if (!DXDDCreate(0, (void**)&G_dxptr->lpDD) || !DXD3DCreate(G_dxptr->lpDD, (void**)&G_dxptr->lpD3D))
 		{
 			DXClose();
 			return 0;
@@ -775,7 +776,7 @@ long DXCreate(long w, long h, long bpp, long Flags, DXPTR* dxptr, HWND hWnd, lon
 		desktop = GetDesktopWindow();
 		hDC = GetDC(desktop);
 		ReleaseDC(desktop, hDC);
-		dev.dmBitsPerPel = G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].DisplayModes[G_dxinfo->nDisplayMode].bpp;
+		dev.dmBitsPerPel = 32;
 		dev.dmSize = 148;	//sizeof(DEVMODE) is 156????
 		dev.dmFields = DM_BITSPERPEL;
 		ChangeDisplaySettings(&dev, 0);
@@ -825,7 +826,8 @@ long DXCreate(long w, long h, long bpp, long Flags, DXPTR* dxptr, HWND hWnd, lon
 	else
 	{
 		Log(5, "DXCreate: Windowed Mode");
-		dm = &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].DisplayModes[G_dxinfo->nDisplayMode];
+		//dm = &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].DisplayModes[G_dxinfo->nDisplayMode];
+		dm = &mydm;
 		r.top = 0;
 		r.left = 0;
 		r.right = dm->w;
@@ -886,7 +888,12 @@ long DXCreate(long w, long h, long bpp, long Flags, DXPTR* dxptr, HWND hWnd, lon
 		desc.ddsCaps.dwCaps = DDSCAPS_VIDEOMEMORY | DDSCAPS_ZBUFFER;
 		desc.dwWidth = G_dxptr->dwRenderWidth;
 		desc.dwHeight = G_dxptr->dwRenderHeight;
-		memcpy(&desc.ddpfPixelFormat, &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].ZBufferInfos->ddpf, sizeof(DDPIXELFORMAT));
+		//memcpy(&desc.ddpfPixelFormat, &G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].ZBufferInfos->ddpf, sizeof(DDPIXELFORMAT));
+		desc.ddpfPixelFormat = {};
+		desc.ddpfPixelFormat.dwSize = 32;
+		desc.ddpfPixelFormat.dwFlags = 1024;
+		desc.ddpfPixelFormat.dwRGBBitCount = 16;
+		desc.ddpfPixelFormat.dwGBitMask = 65535;
 
 		if (DXAttempt(G_dxptr->lpDD->CreateSurface(&desc, &G_dxptr->lpZBuffer, 0)) != DD_OK)
 		{
@@ -898,7 +905,8 @@ long DXCreate(long w, long h, long bpp, long Flags, DXPTR* dxptr, HWND hWnd, lon
 		Log(3, "ZBuffer Created %x", G_dxptr->lpZBuffer);
 	}
 
-	if (!DXCreateD3DDevice(G_dxptr->lpD3D, G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].Guid, G_dxptr->lpBackBuffer, &G_dxptr->lpD3DDevice))
+	//if (!DXCreateD3DDevice(G_dxptr->lpD3D, G_dxinfo->DDInfo[G_dxinfo->nDD].D3DDevices[G_dxinfo->nD3D].Guid, G_dxptr->lpBackBuffer, &G_dxptr->lpD3DDevice))
+		if (!DXCreateD3DDevice(G_dxptr->lpD3D, IID_IDirect3DHALDevice, G_dxptr->lpBackBuffer, &G_dxptr->lpD3DDevice))
 	{
 		DXClose();
 		return 0;
