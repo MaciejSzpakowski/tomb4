@@ -18,6 +18,9 @@
 #include "gamemain.h"
 #include "fmv.h"
 
+#define GET_X_LPARAM(lp)                        ((int)(short)LOWORD(lp))
+#define GET_Y_LPARAM(lp)                        ((int)(short)HIWORD(lp))
+
 static COMMANDLINES commandlines[] =
 {
 	{ "SETUP", 0, &CLSetup },

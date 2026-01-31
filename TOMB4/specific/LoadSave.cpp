@@ -91,6 +91,7 @@ void DoOptions()
 		y = 1;
 		i = 1;
 
+		// TODO SZPAQ, add key config for 'P' menu, screenshoot, change ammo type, binoculars
 		PrintString(phd_centerx >> 2, f + y++ * font_height, sel & (1 << i++) ? 1 : 2, "\x18", 0);
 		PrintString(phd_centerx >> 2, f + y++ * font_height, sel & (1 << i++) ? 1 : 2, "\x1A", 0);
 		PrintString(phd_centerx >> 2, f + y++ * font_height, sel & (1 << i++) ? 1 : 2, "\x19", 0);

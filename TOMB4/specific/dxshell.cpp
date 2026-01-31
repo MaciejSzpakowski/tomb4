@@ -62,37 +62,17 @@ void DXBitMask2ShiftCnt(ulong mask, uchar* shift, uchar* count)
 
 void DXReadKeyboard(char* KeyMap)
 {
-	HRESULT state;
-
 	memset(keymap, 0, 256);
-	if ((::GetAsyncKeyState(VK_ESCAPE) & 0x8000) && true)
-		KeyMap[DIK_ESCAPE] = 1;
-	if ((::GetAsyncKeyState(VK_UP) & 0x8000) && true)
-		KeyMap[DIK_UPARROW] = 1;
-	if ((::GetAsyncKeyState(VK_DOWN) & 0x8000) && true)
-		KeyMap[DIK_DOWNARROW] = 1;
-	if ((::GetAsyncKeyState(VK_RETURN) & 0x8000) && true)
-		KeyMap[DIK_RETURN] = 1;
-	if ((::GetAsyncKeyState(VK_LEFT) & 0x8000) && true)
-		KeyMap[DIK_LEFTARROW] = 1;
-	if ((::GetAsyncKeyState(VK_RIGHT) & 0x8000) && true)
-		KeyMap[DIK_RIGHTARROW] = 1;
-	if ((::GetAsyncKeyState('Z') & 0x8000) && true)
-		KeyMap[DIK_Z] = 1;
-	if ((::GetAsyncKeyState(VK_RCONTROL) & 0x8000) && true)
-		KeyMap[DIK_RCONTROL] = 1;
-	if ((::GetAsyncKeyState(VK_LCONTROL) & 0x8000) && true)
-		KeyMap[DIK_LCONTROL] = 1;
-	if ((::GetAsyncKeyState(VK_LMENU) & 0x8000) && true)
-		KeyMap[DIK_LALT] = 1;
-	if ((::GetAsyncKeyState(VK_RMENU) & 0x8000) && true)
-		KeyMap[DIK_RALT] = 1;
-	if ((::GetAsyncKeyState('P') & 0x8000) && true)
-		KeyMap[DIK_P] = 1;
-	if ((::GetAsyncKeyState(VK_SPACE) & 0x8000) && true)
-		KeyMap[DIK_SPACE] = 1;
+	for (int i = 1; i < 256; i++)
+	{
+		if ((::GetAsyncKeyState(i) & 0x8000) && true)
+			KeyMap[i] = 1;
+	}
 
-	/*state = G_dxptr->Keyboard->GetDeviceState(256, KeyMap);
+
+	/*
+	HRESULT state;
+	state = G_dxptr->Keyboard->GetDeviceState(256, KeyMap);
 
 	if (FAILED(state))
 	{
