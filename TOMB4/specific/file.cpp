@@ -1195,11 +1195,13 @@ bool LoadSamples()
 
 	Log(8, "Number Of Samples %d", num_samples);
 	fread(&num_samples, 1, 4, level_fp);
-	InitSampleDecompress();
 
-	if (num_samples <= 0)
+	if (num_samples > 0)
 	{
-		FreeSampleDecompress();
+		InitSampleDecompress();
+	}
+	else
+	{
 		return 1;
 	}
 

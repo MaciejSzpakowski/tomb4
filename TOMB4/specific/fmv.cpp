@@ -17,7 +17,7 @@
 
 static void (__stdcall* BinkCopyToBuffer)(BINK_STRUCT*, LPVOID, LONG, long, long, long, long);
 static void(__stdcall* BinkOpenDirectSound)(ulong);
-static void (__stdcall* BinkSetSoundSystem)(LPVOID, LPDIRECTSOUND);
+static void (__stdcall* BinkSetSoundSystem)(LPVOID, LPVOID);
 static LPVOID (__stdcall* BinkOpen)(char*, ulong);
 static long (__stdcall* BinkDDSurfaceType)(LPDIRECTDRAWSURFACEX);
 static long (__stdcall* BinkDoFrame)(BINK_STRUCT*);
@@ -141,7 +141,7 @@ long PlayFmvNow(long num)
 	}*/
 	
 	Bink = 0;
-	BinkSetSoundSystem(BinkOpenDirectSound, App.dx.lpDS);
+	BinkSetSoundSystem(BinkOpenDirectSound, nullptr);
 	Bink = (BINK_STRUCT*)BinkOpen(path, 0);
 
 	if (App.dx.Flags & DXF_WINDOWED)

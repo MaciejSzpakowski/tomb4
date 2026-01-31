@@ -271,6 +271,7 @@
     <ClInclude Include="TOMB4\specific\texture.h" />
     <ClInclude Include="TOMB4\specific\time.h" />
     <ClInclude Include="TOMB4\specific\winmain.h" />
+    <ClInclude Include="TOMB4\tomb4\libs\miniaudio.h" />
     <ClInclude Include="TOMB4\tomb4\libs\zlib\zlib.h" />
     <ClInclude Include="TOMB4\tomb4\pch.h" />
     <ClInclude Include="TOMB4\tomb4\tomb4.h" />

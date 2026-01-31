@@ -64,7 +64,35 @@ void DXReadKeyboard(char* KeyMap)
 {
 	HRESULT state;
 
-	state = G_dxptr->Keyboard->GetDeviceState(256, KeyMap);
+	memset(keymap, 0, 256);
+	if ((::GetAsyncKeyState(VK_ESCAPE) & 0x8000) && true)
+		KeyMap[DIK_ESCAPE] = 1;
+	if ((::GetAsyncKeyState(VK_UP) & 0x8000) && true)
+		KeyMap[DIK_UPARROW] = 1;
+	if ((::GetAsyncKeyState(VK_DOWN) & 0x8000) && true)
+		KeyMap[DIK_DOWNARROW] = 1;
+	if ((::GetAsyncKeyState(VK_RETURN) & 0x8000) && true)
+		KeyMap[DIK_RETURN] = 1;
+	if ((::GetAsyncKeyState(VK_LEFT) & 0x8000) && true)
+		KeyMap[DIK_LEFTARROW] = 1;
+	if ((::GetAsyncKeyState(VK_RIGHT) & 0x8000) && true)
+		KeyMap[DIK_RIGHTARROW] = 1;
+	if ((::GetAsyncKeyState('Z') & 0x8000) && true)
+		KeyMap[DIK_Z] = 1;
+	if ((::GetAsyncKeyState(VK_RCONTROL) & 0x8000) && true)
+		KeyMap[DIK_RCONTROL] = 1;
+	if ((::GetAsyncKeyState(VK_LCONTROL) & 0x8000) && true)
+		KeyMap[DIK_LCONTROL] = 1;
+	if ((::GetAsyncKeyState(VK_LMENU) & 0x8000) && true)
+		KeyMap[DIK_LALT] = 1;
+	if ((::GetAsyncKeyState(VK_RMENU) & 0x8000) && true)
+		KeyMap[DIK_RALT] = 1;
+	if ((::GetAsyncKeyState('P') & 0x8000) && true)
+		KeyMap[DIK_P] = 1;
+	if ((::GetAsyncKeyState(VK_SPACE) & 0x8000) && true)
+		KeyMap[DIK_SPACE] = 1;
+
+	/*state = G_dxptr->Keyboard->GetDeviceState(256, KeyMap);
 
 	if (FAILED(state))
 	{
@@ -72,7 +100,7 @@ void DXReadKeyboard(char* KeyMap)
 			G_dxptr->Keyboard->Acquire();
 
 		G_dxptr->Keyboard->GetDeviceState(256, KeyMap);
-	}
+	}*/
 }
 
 long DXAttempt(HRESULT r)
@@ -242,40 +270,12 @@ BOOL __stdcall DXEnumDirectDraw(GUID FAR* lpGUID, LPSTR lpDriverDescription, LPS
 	return DDENUMRET_OK;
 }
 
-BOOL __stdcall DXEnumDirectSound(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule, LPVOID lpContext)
-{
-	DXINFO* dxinfo;
-	DXDIRECTSOUNDINFO* DSInfo;
-	long nDSInfo;
-
-	Log(2, "DXEnumDirectSound");
-	dxinfo = (DXINFO*)lpContext;
-	nDSInfo = dxinfo->nDSInfo;
-	dxinfo->DSInfo = (DXDIRECTSOUNDINFO*)AddStruct(dxinfo->DSInfo, nDSInfo, sizeof(DXDIRECTSOUNDINFO));
-	DSInfo = &dxinfo->DSInfo[nDSInfo];
-
-	if (lpGuid)
-	{
-		DSInfo->lpGuid = &DSInfo->Guid;
-		DSInfo->Guid = *lpGuid;
-	}
-	else
-		DSInfo->lpGuid = 0;
-
-	lstrcpy(DSInfo->About, lpcstrDescription);
-	lstrcpy(DSInfo->Name, lpcstrModule);
-	Log(5, "Found - %s %s", lpcstrDescription, lpcstrModule);
-	dxinfo->nDSInfo++;
-	return DDENUMRET_OK;
-}
-
 long DXGetInfo(DXINFO* dxinfo, HWND hwnd)
 {
 	Log(2, "DXInitialise");
 	G_hwnd = hwnd;
 	Log(5, "Enumerating DirectDraw Devices");
 	DXAttempt(DirectDrawEnumerate(DXEnumDirectDraw, dxinfo));
-	DXAttempt(DirectSoundEnumerate(DXEnumDirectSound, dxinfo));
 	G_dxinfo = dxinfo;
 	return 1;
 }
@@ -551,7 +551,7 @@ void DXMove(long x, long y)
 
 void DXInitKeyboard(HWND hwnd, HINSTANCE hinstance)
 {
-	IDirectInput* dinput;
+	/*IDirectInput* dinput;
 	IDirectInputDevice* Keyboard;
 
 	DXAttempt(DirectInput8Create(hinstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&dinput, 0));
@@ -578,7 +578,7 @@ void DXInitKeyboard(HWND hwnd, HINSTANCE hinstance)
 
 	DXAttempt(G_dxptr->Keyboard->SetCooperativeLevel(hwnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND));
 	DXAttempt(G_dxptr->Keyboard->SetDataFormat(&c_dfDIKeyboard));
-	DXAttempt(G_dxptr->Keyboard->Acquire());
+	DXAttempt(G_dxptr->Keyboard->Acquire());*/
 	memset(keymap, 0, sizeof(keymap));
 	memset(keymap2, 0, sizeof(keymap2));
 }
@@ -1651,42 +1651,6 @@ const char* DXGetErrorString(HRESULT hr)
 	case D3DERR_ZBUFFER_NOTPRESENT:
 		return "ZBuffer not present";
 
-	case DSERR_ALLOCATED:
-		return "The request failed because resources, such as a priority level, were already in use by another caller. ";
-
-	case DSERR_ALREADYINITIALIZED:
-		return "The object is already initialized. ";
-
-	case DSERR_BADFORMAT:
-		return "The specified wave format is not supported. ";
-
-	case DSERR_BUFFERLOST:
-		return "The buffer memory has been lost and must be restored. ";
-
-	case DSERR_CONTROLUNAVAIL:
-		return "The buffer control (volume, pan, and so on) requested by the caller is not available. ";
-
-	case DSERR_INVALIDCALL:
-		return "This function is not valid for the current state of this object. ";
-
-	case DSERR_NOAGGREGATION:
-		return "The object does not support aggregation. ";
-
-	case DSERR_NODRIVER:
-		return "No sound driver is available for use. ";
-
-	case DSERR_NOINTERFACE:
-		return "The requested COM interface is not available. ";
-
-	case DSERR_OTHERAPPHASPRIO:
-		return "Another application has a higher priority level, preventing this call from succeeding ";
-
-	case DSERR_PRIOLEVELNEEDED:
-		return "The caller does not have the priority level required for the function to succeed. ";
-
-	case DSERR_UNINITIALIZED:
-		return "The IDirectSound::Initialize method has not been called or has not been called successfully before other methods were called. ";
+		return "Undefined Error";
 	}
-
-	return "Undefined Error";
 }

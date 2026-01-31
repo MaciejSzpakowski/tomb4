@@ -139,7 +139,7 @@ void WinClose()
 	if (!G_dxptr)
 		return;
 
-	DXAttempt(G_dxptr->Keyboard->Unacquire());
+	/*DXAttempt(G_dxptr->Keyboard->Unacquire());
 
 	if (G_dxptr->Keyboard)
 	{
@@ -155,7 +155,7 @@ void WinClose()
 		G_dxptr->lpDirectInput = 0;
 	}
 	else
-		Log(1, "%s Attempt To Release NULL Ptr", "DirectInput");
+		Log(1, "%s Attempt To Release NULL Ptr", "DirectInput");*/
 
 	DXDSClose();
 }

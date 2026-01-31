@@ -1200,6 +1200,14 @@ struct STATIC_INFO
 	short z_maxc;
 };
 
+struct soundthing
+{
+};
+
+struct soundthing2
+{
+};
+
 struct DXPTR
 {
 	LPDIRECTDRAWX lpDD;
@@ -1210,8 +1218,8 @@ struct DXPTR
 	LPDIRECTDRAWSURFACEX lpBackBuffer;
 	LPDIRECTDRAWSURFACEX lpZBuffer;
 	LPDIRECT3DVIEWPORTX lpViewport;
-	LPDIRECTSOUND8 lpDS;
-	IXAudio2* lpXA;
+	soundthing* lpDS;
+	soundthing2* lpXA;
 	ulong dwRenderWidth;
 	ulong dwRenderHeight;
 	RECT rViewport;
@@ -1219,8 +1227,8 @@ struct DXPTR
 	long Flags;
 	ulong WindowStyle;
 	long CoopLevel;
-	LPDIRECTINPUTX lpDirectInput;
-	LPDIRECTINPUTDEVICEX Keyboard;
+	//LPDIRECTINPUTX lpDirectInput;
+	//LPDIRECTINPUTDEVICEX Keyboard;
 	HWND hWnd;
 	volatile long InScene;
 	volatile long WaitAtBeginScene;
@@ -1975,7 +1983,7 @@ struct SAMPLE_INFO
 
 struct DS_SAMPLE
 {
-	LPDIRECTSOUNDBUFFER buffer;
+	void* buffer;
 	long frequency;
 	long playing;
 };

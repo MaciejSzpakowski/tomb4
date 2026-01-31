@@ -153,6 +153,7 @@ static uchar gfResidentCut[4];
 
 static char fmv_to_play[2] = { 0, 0 };
 static char num_fmvs = 0;
+void updateTrack();
 
 void DoGameflow()
 {
@@ -434,7 +435,7 @@ void DoGameflow()
 
 void DoLevel(uchar Name, uchar Audio)
 {
-	long gamestatus;
+	long gamestatus;	
 
 	gamestatus = 0;
 	SetFade(255, 0);
@@ -525,6 +526,7 @@ void DoLevel(uchar Name, uchar Audio)
 
 	while (!gfStatus)
 	{
+		updateTrack();
 		S_InitialisePolyList();
 
 		if (gfLegendTime && !DestFadeScreenHeight && !FadeScreenHeight && !cutseq_num)
